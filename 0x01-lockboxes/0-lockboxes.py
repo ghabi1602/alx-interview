@@ -1,20 +1,19 @@
-#!/usr/bin/env python3
-"""a module that checks if all boxes can be opened"""
-from collections import deque
+#!/usr/bin/python3
+"""Determines if all boxes can be opened!!"""
 
 
 def canUnlockAll(boxes):
-    """function definition to check if all boxes can be opened"""
-    n = len(boxes)
-    opened = [False] * n
-    opened[0] = True
-    q = deque([0])
-    while q:
-        current_box = q.popleft()
+    """checks if boxes can be unlocked!!"""
+    position = 0
+    unlocked = {}
 
-        for key in boxes[current_box]:
-            if key < n and not opened[key]:
-                opened[key] = True
-                q.append(key)
-
-    return all(opened)
+    for box in boxes:
+        if len(box) == 0 or position == 0:
+            unlocked[position] = "always_unlocked"
+        for key in box:
+            if key < len(boxes) and key != position:
+                unlocked[key] = key
+        if len(unlocked) == len(boxes):
+            return True
+        position += 1
+    return False
